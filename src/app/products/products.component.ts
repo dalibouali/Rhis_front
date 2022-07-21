@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
-import { NgbModal } from '@angular-devkit/build-angular';
+//import { NgbModal } from '@angular-devkit/build-angular';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({

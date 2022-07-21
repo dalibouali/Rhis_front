@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,FormsModule,
+    HttpClientModule,FormsModule,ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [UserService],
