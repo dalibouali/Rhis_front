@@ -1,10 +1,47 @@
 <br>
 <br>
-<div class="row section-bg" style="width: 70%; text-align: center; margin-left: 200px;">
+<div class="row section-bg" style="width: 100%; text-align: center; ">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <h1 class="card-title" style="text-align: center;">Products</h1>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-success" (click)="open2(content)">Add Product</button>
+                    <ng-template #content let-c="close" let-d="dismiss">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" aria-label="Close"
+                                (click)="d('Cross click')"></button>
+                        </div>
+                        <div class="container mt-4 mb-4 p-3 ">
+                            <div class="card p-4">
+                                <div class=" image d-flex flex-column justify-content-center align-items-center">
+                                    <button class="btn btn-secondary"> <img src="assets/images/pc.jpg" height="100"
+                                            width="100" /></button>
+                                    <form [formGroup]="product">
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput">Name</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput"
+                                                placeholder="enter name here" formControlName="name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput2">Price</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput2"
+                                                placeholder="enter price here " formControlName="price">
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="text-align: center;">
+                            <button type="button" class="btn btn-outline-dark"
+                                (click)="addProduct();c('Save click')">Approve</button>
+                            <button type="button" class="btn btn-danger" (click)="c('Save click')">Reject</button>
+                        </div>
+
+                    </ng-template>
+
+                </div>
 
                 <div class="table-responsive">
                     <table class="table align-middle text-nowrap">
@@ -18,26 +55,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor='let p of products'>
                                 <td>
 
 
                                     <div class="text-align:center">
-                                        <h5 class="mb-0 font-medium"> Produit-1</h5>
-                                        <span class="mb-0 font-medium"> KNSGH?S5</span>
+                                        <h5 class="mb-0 font-medium"> {{p.id}}</h5>
+
                                     </div>
 
                                 </td>
-                                <td class="mb-0 font-medium">Lenovo</td>
+                                <td class="mb-0 font-medium">{{p.name}}</td>
 
                                 <td>
-                                    5000dt
+                                    {{p.price}}
                                 </td>
 
 
 
                                 <td>
-                                    <img alt="produit" width="45" class="rounded-circle">
+                                    <img alt="produit" src="assets/images/pc.jpg" width="45" class="rounded-circle">
                                 </td>
                                 <td>
                                     <!-- Call to action buttons -->
@@ -50,13 +87,51 @@
                                         </li>
                                         <li class="list-inline-item">
                                             <button class="btn btn-success btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="View"><i
-                                                    class="fa fa-edit"></i></button>
+                                                data-toggle="tooltip" data-placement="top" title="Update"><i
+                                                    class="fa fa-edit" (click)="open(content,p.name)"></i></button>
+                                            <ng-template #content let-c="close" let-d="dismiss">
+                                                <div class="modal-header">
+                                                    <button type="button" class="btn-close" aria-label="Close"
+                                                        (click)="d('Cross click')"></button>
+                                                </div>
+                                                <div class="container mt-4 mb-4 p-3 ">
+                                                    <div class="card p-4">
+                                                        <div
+                                                            class=" image d-flex flex-column justify-content-center align-items-center">
+                                                            <button class="btn btn-secondary"> <img
+                                                                    src="assets/images/pc.jpg" height="100"
+                                                                    width="100" /></button>
+                                                            <form [formGroup]="product">
+                                                                <div class="form-group">
+                                                                    <label for="formGroupExampleInput">Name</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="formGroupExampleInput"
+                                                                        placeholder={{p.name}} formControlName="name">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="formGroupExampleInput2">Price</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="formGroupExampleInput2"
+                                                                        placeholder={{p.price}} formControlName="price">
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="text-align: center;">
+                                                    <button type="button" class="btn btn-outline-dark"
+                                                        (click)="update(p.name);c('Save click')">Approve</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        (click)="c('Save click')">Reject</button>
+                                                </div>
+
+                                            </ng-template>
                                         </li>
                                         <li class="list-inline-item">
                                             <button class="btn btn-danger btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Delete"><i
-                                                    class="fa fa-trash"></i></button>
+                                                data-toggle="tooltip" data-placement="top" title="Delete"
+                                                (click)="deleteProduct(p.name)"><i class="fa fa-trash"></i></button>
                                         </li>
                                     </ul>
                                     <script>
