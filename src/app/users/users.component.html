@@ -1,10 +1,12 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <br>
 <br>
-<div class="row section-bg" style="width: 70%; text-align: center; margin-left: 200px;">
+<div id="mycontainer" class="row section-bg" style="width: 70%; text-align: center; margin-left: 200px;">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h1 class="card-title" style="text-align: center;">Products</h1>
+                <h1 class="card-title" style="text-align: center;">Employees</h1>
 
                 <div class="table-responsive">
                     <table class="table align-middle text-nowrap">
@@ -17,41 +19,41 @@
                                 <th class="text-dark font-medium fs-4">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngFor="let user of users">
                             <tr>
                                 <td>
 
 
                                     <div class="text-align:center">
-                                        <h5 class="mb-0 font-medium"> User-1</h5>
-                                        <span class="mb-0 font-medium"> KNSGH?S5</span>
+                                        <h5 class="mb-0 font-medium"> User-{{user.id}}</h5>
+                                        <span class="mb-0 font-medium"> {{user.id}}</span>
                                     </div>
 
                                 </td>
-                                <td class="mb-0 font-medium">Med Ali</td>
+                                <td class="mb-0 font-medium">{{user?.firstName}}</td>
 
-                                <td class="mb-0 font-medium">BoUali</td>
+                                <td class="mb-0 font-medium">{{user?.lastName}}</td>
 
 
 
-                                <td class="mb-0 font-medium">medali@gmail.com</td>
+                                <td class="mb-0 font-medium">{{user?.username}}</td>
                                 <td>
                                     <!-- Call to action buttons -->
                                     <ul class="list-inline m-0">
                                         <li class="list-inline-item">
                                             <button class="btn btn-primary btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Add"><i
+                                                data-toggle="tooltip" data-placement="top" title="Add" (click)="onOpenModal(user,'add')"><i
                                                     class="fa fa-table" aria-hidden="true"></i></button>
 
                                         </li>
                                         <li class="list-inline-item">
                                             <button class="btn btn-success btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="View"><i
+                                                data-toggle="tooltip" data-placement="top" title="View" (click)="onOpenModal(user,'edit')"><i
                                                     class="fa fa-edit"></i></button>
                                         </li>
                                         <li class="list-inline-item">
                                             <button class="btn btn-danger btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                data-toggle="tooltip" data-placement="top" title="Delete" (click)="onOpenModal(user,'delete')"  ><i
                                                     class="fa fa-trash"></i></button>
                                         </li>
                                     </ul>
@@ -64,8 +66,111 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <!-- Delete Modal -->
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Delete user {{deleteUser?.username}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>Are you sure you want to delete user {{deleteUser?.username}} </p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button  (click)="OnDeleteUser(deleteUser)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <!-- Add user Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addEmployeeModalLabel">Add User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="OnAddUser(addForm)">
+            <div class="form-group">
+               <label for="name">firstName</label>
+               <input type="text" ngModel name="firstName" class="form-control" id="firstName" placeholder="first Name" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">lastName</label>
+                <input type="text" ngModel name="lastName" class="form-control" id="lastName" placeholder="last Name" required>
+             </div>
+            <div class="form-group">
+               <label for="username">Username</label>
+               <input type="email" ngModel name="username" class="form-control" id="username" placeholder="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">password</label>
+                <input type="password" ngModel name="password" class="form-control" id="password" placeholder="password" required>
+             </div>
+             <div class="form-group">
+                <label for="retypepassword">retype password</label>
+                <input type="password" ngModel name="retypepassword" class="form-control" id="retypepassword" placeholder="retype password" required>
+             </div>
+            <div class="modal-footer">
+               <button type="button" id="add-user-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button [disabled]="addForm.invalid"  type="submit" class="btn btn-primary" >Save changes</button>
+            </div>
+            </form>
+         </div>
+      </div>
+    </div>
+    </div>
+  
+
+    
+<!-- Edit Modal -->
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateEmployeeModalLabel">Edit Employee </h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #updateForm="ngForm"  >
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="text" ngModel="{{editUser?.firstName}}" name="firstName" class="form-control" id="firstName" placeholder="first Name" required>
+                 </div>
+                 <div class="form-group">
+                     <label for="lastName">Last Name</label>
+                     <input type="text" ngModel="{{editUser?.lastName}}" name="lastName" class="form-control" id="lastName" placeholder="last Name" required>
+                  </div>
+                 <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="email" ngModel="{{editUser?.username}}" name="username" class="form-control" id="username" placeholder="username" required>
+                 </div>
+                
+                <div class="modal-footer">
+                   <button type="button" id="update-employee-form" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                   <button  data-dismiss="modal" class="btn btn-primary" (click)="OnUpdateUser(updateForm.value)">Save changes</button>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
