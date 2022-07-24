@@ -1,3 +1,5 @@
+import { Affectation } from "../roles/Affectation";
+
 export interface User{
 
     id:number;
@@ -5,7 +7,8 @@ export interface User{
     firstName:string;
     lastName:string;
     password:string;
-    
+    affectationList:Affectation[];
+
 
 
 }

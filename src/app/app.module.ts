@@ -9,6 +9,7 @@ import { ProductsComponent } from './products/products.component';
 import { UsersComponent } from './users/users.component';
 import {UserService} from '../app/users/user.service';
 import { FormsModule } from '@angular/forms';
+import { RolesComponent } from './roles/roles.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     ProductsComponent,
     NavbarComponent,
-    UsersComponent
+    UsersComponent,
+    RolesComponent
   ],
   imports: [
     BrowserModule,
