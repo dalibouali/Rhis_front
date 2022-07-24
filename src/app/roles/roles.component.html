@@ -55,7 +55,7 @@
                                         </li>
                                         <li class="list-inline-item">
                                             <button class="btn btn-danger btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Delete"   ><i
+                                                data-toggle="tooltip" data-placement="top" title="Delete"  (click)="onOpenModal(droit,'delete')" ><i
                                                     class="fa fa-trash"></i></button>
                                         </li>
                                     </ul>
@@ -77,20 +77,20 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+<div class="modal fade" id="deleteDroitModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
        <div class="modal-content">
           <div class="modal-header">
-             <h5 class="modal-title" id="deleteModelLabel">Delete role role id?</h5>
+             <h5 class="modal-title" id="deleteModelLabel">Delete Droit {{deleteDroit?.id}} ?</h5>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
              </button>
           </div>
           <div class="modal-body">
-             <p>Are you sure you want to delete role role id</p>
+             <p>Are you sure you want to delete droit {{deleteDroit?.id}} de role {{deleteDroit?.roleD.name}} </p>
              <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button   class="btn btn-danger" data-dismiss="modal">Yes</button>
+                <button   class="btn btn-danger" (click)="OnDeleteDroit(deleteDroit)" data-dismiss="modal">Yes</button>
              </div>
           </div>
        </div>
