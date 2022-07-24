@@ -14,7 +14,7 @@ export class DroitService {
 
   constructor(private http:HttpClient) { }
   public getDroits():Observable<Droit[]>{
-    return this.http.get<Droit[]>(`${this.apiServerUrl}//retrieve-all-droits`);
+    return this.http.get<Droit[]>(`${this.apiServerUrl}/retrieve-all-droits`);
   }
   public addDroit(droit:Droit,role_id:number,ecran_id:number):Observable<Droit>{
     return this.http.post<Droit>(`${this.apiServerUrl}/add-droit/${role_id}/${ecran_id}`,droit);

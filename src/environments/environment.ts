@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiBaseUrl:'http://localhost:8085/api',
-  HoussemapiBaseUrl:'http://localhost:8085'
+  HoussemapiBaseUrl:'http://localhost:8085/api'
 };
 
 /*
