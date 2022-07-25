@@ -51,8 +51,8 @@ public editDroit:Droit|null=null;
   public getRoles():void{
     this.roleservice.getRoles().subscribe(
       (response:Role[])=>{this.roles=response;
-   for (var role of this.roles)
-   console.log(role.name)
+   //for (var role of this.roles)
+   //console.log(role.name)
       },
       (error:HttpErrorResponse)=>{alert(error.message);}
     )
