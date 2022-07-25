@@ -7,6 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <h1 class="card-title" style="text-align: center;">Roles</h1>
+                <button type="button" class="btn btn-success" (click)="onOpenModal(null,'add')">Add Role</button>
 
                 <div class="table-responsive">
                     <table class="table align-middle text-nowrap">
@@ -44,13 +45,13 @@
                                     <ul class="list-inline m-0">
                                         <li class="list-inline-item">
                                             <button class="btn btn-primary btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Add" ><i
+                                                data-toggle="tooltip" data-placement="top" title="Add" (click)="onOpenModal(droit,'add')"><i
                                                     class="fa fa-table" aria-hidden="true"></i></button>
 
                                         </li>
                                         <li class="list-inline-item">
                                             <button class="btn btn-success btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="View" ><i
+                                                data-toggle="tooltip" data-placement="top" title="View" (click)="onOpenModal(droit,'edit')" ><i
                                                     class="fa fa-edit"></i></button>
                                         </li>
                                         <li class="list-inline-item">
@@ -98,8 +99,8 @@
   </div>
 
 
-  <!-- Add user Modal -->
-<div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+  <!-- Add role Modal -->
+<div class="modal fade" id="addDroitModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
@@ -109,28 +110,28 @@
             </button>
          </div>
          <div class="modal-body">
-            <form #addForm="ngForm" >
+            <form #addForm="ngForm" (ngSubmit)="OnAddDroit(addForm)">
             <div class="form-group">
                <label for="name">Role name</label>
-               <input type="text" ngModel name="firstName" class="form-control" id="firstName" placeholder="first Name" required>
+               <input type="text" ngModel name="name" class="form-control" id="name" placeholder="name" required>
             </div>
-            <div class="form-group">
-                <label for="lastName">Ecran name</label>
-                <input type="text" ngModel name="lastName" class="form-control" id="lastName" placeholder="last Name" required>
-             </div>
-            <div class="form-group">
-               <label for="username">Username</label>
-               <input type="email" ngModel name="username" class="form-control" id="username" placeholder="username" required>
+            <h3 class="card-title" style="text-align: center;">Ecran</h3>
+            <select class="form-select" ngModel name="ecran" aria-label="Default select example">
+                <option selected>Veuillerz selectionner un ecran</option>
+                <option value="1">products</option>
+                <option value="2">users</option>
+                <option value="3">roles</option>
+              </select>
+            <h3 class="card-title" style="text-align: center;">Droits</h3>
+            <div class="checkboxes">
+                <input type="checkbox" ngModel name="afficher" class="custom-control-input" id="afficher" name="afficher" checked>
+                <label class="custom-control-label" for="afficher" >afficher</label>
+                <input type="checkbox" ngModel name="modifier" class="custom-control-input" id="modifier" name="modifier">
+                <label class="custom-control-label" for="modifier">modifier</label>
+                <input type="checkbox" ngModel name="ajouter" class="custom-control-input" id="ajouter" name="ajouter">
+                <label class="custom-control-label" for="ajouter">ajouter</label>
             </div>
-
-            <div class="form-group">
-                <label for="password">password</label>
-                <input type="password" ngModel name="password" class="form-control" id="password" placeholder="password" required>
-             </div>
-             <div class="form-group">
-                <label for="retypepassword">retype password</label>
-                <input type="password" ngModel name="retypepassword" class="form-control" id="retypepassword" placeholder="retype password" required>
-             </div>
+           
             <div class="modal-footer">
                <button type="button" id="add-user-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                <button [disabled]="addForm.invalid"  type="submit" class="btn btn-primary" >Save changes</button>
@@ -144,7 +145,7 @@
 
     
 <!-- Edit Modal -->
-<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateDroitModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
        <div class="modal-content">
           <div class="modal-header">
@@ -154,23 +155,30 @@
              </button>
           </div>
           <div class="modal-body">
-             <form #updateForm="ngForm"  >
+             <form #updateForm="ngForm" >
                 <div class="form-group">
-                    <label for="name">First Name</label>
-                    <input type="text" ngModel="" name="firstName" class="form-control" id="firstName" placeholder="first Name" required>
+                    <label for="name">Role name</label>
+                    <input type="text" ngModel="{{editDroit?.roleD.name}}" name="name" class="form-control" id="editname" placeholder="role name" required>
                  </div>
-                 <div class="form-group">
-                     <label for="lastName">Last Name</label>
-                     <input type="text" ngModel="" name="lastName" class="form-control" id="lastName" placeholder="last Name" required>
-                  </div>
-                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="email" ngModel="" name="username" class="form-control" id="username" placeholder="username" required>
-                 </div>
+                  <h3 class="card-title" style="text-align: center;">Ecran</h3>
+            <select class="form-select" ngModel="{{editDroit?.ecran.name}}" name="ecran" aria-label="Default select example">
+                <option value="products" >products</option>
+                <option value="users" >users</option>
+                <option value="roles" >roles</option>
+              </select>
+            <h3 class="card-title" style="text-align: center;">Droits</h3>
+            <div class="checkboxes">
+                <input type="checkbox" [ngModel]="checkafficher()" name="afficher" class="custom-control-input" id="afficheredit" name="afficher" [checked]="checkafficher()">
+                <label class="custom-control-label" for="afficher" >afficher</label>
+                <input type="checkbox" [ngModel]="checkmodifier()" name="modifier" class="custom-control-input" id="modifieredit" name="modifier" [checked]="checkmodifier()">
+                <label class="custom-control-label" for="modifier">modifier</label>
+                <input type="checkbox" [ngModel]="checkajouter()" name="ajouter" class="custom-control-input" id="ajouteredit" name="ajouter" [checked]="checkajouter()">
+                <label class="custom-control-label" for="ajouter">ajouter</label>
+            </div>
                 
                 <div class="modal-footer">
-                   <button type="button" id="update-employee-form" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                   <button  data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+                   <button type="button" id="update-droit-form" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                   <button   [disabled]="updateForm.invalid"  (click)="OnUpdateDroit(updateForm)"  type="submit" class="btn btn-primary">Save changes</button>
                 </div>
              </form>
           </div>

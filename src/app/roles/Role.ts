@@ -3,10 +3,10 @@ import { Droit } from "./Droit";
 
 export interface Role{
 
-    id:number;
+    id?:number;
     name:string;
-    affectationList:Affectation[];
-    droitListR:Droit[];
+    affectationList?:Affectation[];
+    droitListR?:Droit[];
     
 
 

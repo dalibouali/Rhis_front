@@ -2,7 +2,7 @@ import { Droit } from "./Droit";
 
 export interface Ecran{
 
-    id:number;
+    id?:number;
     name:string;
-    EcranList:Droit[];
+    DroitList?:Droit[];
 }

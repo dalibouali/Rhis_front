@@ -30,4 +30,7 @@ export class EcranService {
   public getEcran(id:number){
     return this.http.get(`${this.apiServerUrl}/retrieve-ecran/${id}`)
   }
+  public getEcranName(name:string):Observable<Ecran>{
+    return this.http.get<Ecran>(`${this.apiServerUrl}/get-ecran/${name}`)
+  }
 }

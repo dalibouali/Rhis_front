@@ -3,10 +3,10 @@ import { Role } from "./Role";
 
 export interface Droit{
 
-    id:number;
+    id?:number;
     cum:number;
-    ecran:Ecran;
-    roleD:Role;
+    ecran?:Ecran;
+    roleD?:Role;
     
 
 }

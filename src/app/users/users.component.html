@@ -7,6 +7,8 @@
         <div class="card">
             <div class="card-body">
                 <h1 class="card-title" style="text-align: center;">Employees</h1>
+                <button type="button" class="btn btn-success" (click)="onOpenModal(null,'add')">Add User</button>
+
 
                 <div class="table-responsive">
                     <table class="table align-middle text-nowrap">
@@ -42,7 +44,7 @@
                                     <ul class="list-inline m-0">
                                         <li class="list-inline-item">
                                             <button class="btn btn-primary btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Add" (click)="onOpenModal(user,'add')"><i
+                                                data-toggle="tooltip" data-placement="top" title="Add" ><i
                                                     class="fa fa-table" aria-hidden="true"></i></button>
 
                                         </li>
