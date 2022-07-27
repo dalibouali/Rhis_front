@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
-const USER_ROLE = 'auth-role'
+const SCREEN1 = 'ListProduct';
+const SCREEN2 = 'ListUser';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,8 +28,10 @@ export class TokenStorageService {
   public saveUser(decodedToken: any): void {
 
     window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.removeItem(USER_ROLE);
-    window.sessionStorage.setItem(USER_ROLE, decodedToken.Roles)
+    window.sessionStorage.removeItem(SCREEN1);
+    window.sessionStorage.setItem(SCREEN1, decodedToken.ListProduct)
+    window.sessionStorage.removeItem(SCREEN2);
+    window.sessionStorage.setItem(SCREEN2, decodedToken.ListUser)
     window.sessionStorage.setItem(USER_KEY, decodedToken.sub)
     console.log("user role:::", decodedToken)
   }
@@ -39,8 +42,15 @@ export class TokenStorageService {
     }
     return {};
   }
-  public getRole(): any {
-    const role = window.sessionStorage.getItem(USER_ROLE);
+  public getListProduct(): any {
+    const role = window.sessionStorage.getItem(SCREEN1);
+    if (role) {
+      return role
+    }
+    return {};
+  }
+  public getListUser(): any {
+    const role = window.sessionStorage.getItem(SCREEN2);
     if (role) {
       return role
     }
