@@ -124,11 +124,11 @@ public OnAddDroit(addForm:NgForm):void{
   //console.log(json.ecran)
   let ecran_name="p"
   if(json.ecran==="1")
-  ecran_name="ListProducts";
+  ecran_name="ListProduct";
   else if(json.ecran==="2")
-  ecran_name="ListUsers";
+  ecran_name="ListUser";
   else if(json.ecran==="3")
-  ecran_name="ListRoles";
+  ecran_name="ListRole";
   let cum_=1
   if(json.afficher==true && json.modifier==true&& json.ajouter==true)
   cum_=7
@@ -331,7 +331,7 @@ public OnUpdateDroit(updateForm:NgForm):void{
   cum_=5
   else if (json.afficher==true && json.ajouter==true)
   cum_=3 
-  if (ecran_name!="ListProducts" && ecran_name!="ListUsers" &&ecran_name!="ListRoles")
+  if (ecran_name!="ListProduct" && ecran_name!="ListUser" &&ecran_name!="ListRole")
   alert('Erreur : veuiller choisir un ecran')
   else if (json.afficher==""||json.afficher==false||json.afficher==null)
   alert('Erreur: veuillez cocher le droit afficher comme droit minimal')

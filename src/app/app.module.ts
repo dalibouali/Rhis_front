@@ -12,6 +12,7 @@ import { UserService } from '../app/users/user.service';
 import { FormsModule } from '@angular/forms';
 import { RolesComponent } from './roles/roles.component';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -23,7 +24,9 @@ import { TokenInterceptorService } from './token-interceptor.service';
     LoginComponent,
     NavbarComponent,
     UsersComponent,
-    RolesComponent
+    RolesComponent,
+    HomeComponent,
+
   ],
   imports: [
     BrowserModule,

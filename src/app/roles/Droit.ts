@@ -1,12 +1,12 @@
 import { Ecran } from "./Ecran";
 import { Role } from "./Role";
 
-export interface Droit{
+export interface Droit {
 
-    id?:number;
-    cum:number;
-    ecran?:Ecran;
-    roleD?:Role;
-    
+    id?: number;
+    cum: number;
+    ecran?: Ecran;
+    role?: Role;
+
 
 }
