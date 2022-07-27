@@ -100,7 +100,7 @@
 
   
   <!-- Add role Modal -->
-<div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" aria-labelledby="addRoleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
@@ -110,7 +110,7 @@
             </button>
          </div>
          <div class="modal-body">
-            <form #addForm="ngForm" (ngSubmit)="OnAddRole(addForm)">
+            <form #addFormRole="ngForm" (ngSubmit)="OnAddRole(addFormRole)">
             <h3 class="card-title" style="text-align: center;">Role name</h3>
             <select class="form-select" [ngModel] name="role" aria-label="Default select example" >
                 <option *ngFor="let role of roles"  value="{{role.name}}">{{role.name}}</option>
@@ -118,7 +118,7 @@
             
             <div class="modal-footer">
                <button type="button" id="add-role-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button [disabled]="addForm.invalid"  type="submit" class="btn btn-primary" >Save changes</button>
+               <button [disabled]="addFormRole.invalid"  type="submit" class="btn btn-primary" >Save changes</button>
             </div>
             </form>
          </div>
