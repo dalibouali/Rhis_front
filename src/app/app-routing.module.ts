@@ -7,6 +7,7 @@ import { RolesComponent } from './roles/roles.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'product', component: ProductsComponent },
   { path: 'user', component: UsersComponent },
   { path: 'role', component: RolesComponent },

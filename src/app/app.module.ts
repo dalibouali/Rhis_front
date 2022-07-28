@@ -1,5 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { RolesComponent } from './roles/roles.component';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { HomeComponent } from './home/home.component';
+import { ErrorHandlerService } from './error-handler.service';
 
 
 
@@ -33,7 +34,7 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule, FormsModule, ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [UserService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
+  providers: [UserService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }, { provide: ErrorHandler, useClass: ErrorHandlerService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
