@@ -16,21 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-function initializeKeycloak(keycloak: KeycloakService) {
-  return () =>
-    keycloak.init({
-      config: {
-        url: 'http://localhost:8090/auth',
-        realm: 'Test-Realm',
-        clientId: 'rhis-front',
-      },
-      initOptions: {
-        onLoad: 'login-required',  // allowed values 'login-required', 'check-sso';
-        flow: "standard"          // allowed values 'standard', 'implicit', 'hybrid';
-      },
-    });
-}
+
 
 
 
@@ -56,7 +42,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserModule,
     HttpClientModule, FormsModule, ReactiveFormsModule,
     AppRoutingModule,
-    KeycloakAngularModule
+
 
 
   ],
