@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PrevilegeService } from '../previlege.service';
 import { TokenStorageService } from '../token-storage.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class NavbarComponent implements OnInit {
   username = "";
 
 
-  constructor(private tokenStorage: TokenStorageService, private router: Router) { }
+  constructor(private tokenStorage: TokenStorageService, private previlege: PrevilegeService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUser()
@@ -51,6 +52,25 @@ export class NavbarComponent implements OnInit {
 
       return null
     };
+  }
+
+  public onOpenModal(mode: string): void {
+
+    const container = document.getElementById('navbarSupportedContent');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+    if (mode === 'error') {
+      if (!this.previlege.canRead(this.tokenStorage.getListUser())) {
+        button.setAttribute('data-target', '#errorModal')
+        container?.appendChild(button);
+        button.click();
+      }
+    }
+
+
+    //console.log(this.deleteUser?.firstName)
   }
 
 }
