@@ -77,6 +77,11 @@
     </div>
 </div>
 
+<div *ngIf="!isAffiche()">
+<h1>Error:Unauthorized</h1>
+
+</div>
+
 <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
        <div class="modal-content">
