@@ -6,6 +6,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TokenStorageService } from '../token-storage.service';
 import { PrevilegeService } from '../previlege.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-products',
@@ -17,7 +19,7 @@ export class ProductsComponent implements OnInit {
     name: new FormControl(''),
     price: new FormControl(''),
   });
-  constructor(private productservice: ProductService, private modalService: NgbModal, private previlege: PrevilegeService, private tokenstorage: TokenStorageService) { }
+  constructor(private productservice: ProductService, private modalService: NgbModal, private previlege: PrevilegeService, private tokenstorage: TokenStorageService, private router: Router) { }
   products: any;
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class ProductsComponent implements OnInit {
   }
 
   showProducts(): void {
+
     if (this.previlege.canRead(this.tokenstorage.getListProduct())) {
       this.productservice.getProducts()
         .subscribe(
@@ -45,7 +48,11 @@ export class ProductsComponent implements OnInit {
             console.log(error)
           }
         );
+    } else {
+      this.router.navigate(['/login']);
+
     }
+
   }
   deleteProduct(name: string): void {
     if (this.previlege.canWrite(this.tokenstorage.getListProduct())) {
@@ -59,6 +66,10 @@ export class ProductsComponent implements OnInit {
             console.log(error)
           }
         )
+    } else {
+      alert("you are unauthorized to delete a product")
+
+
     }
   }
   update(name: string): void {
@@ -75,6 +86,9 @@ export class ProductsComponent implements OnInit {
 
       )
     }
+    else {
+      alert("you are unauthorized to update a product")
+    }
 
   }
   addProduct(): void {
@@ -89,6 +103,9 @@ export class ProductsComponent implements OnInit {
         }
 
       )
+    }
+    else {
+      alert("you are unauthorized to add a product")
     }
   }
 }

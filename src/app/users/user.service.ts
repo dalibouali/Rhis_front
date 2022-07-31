@@ -18,7 +18,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiServerUrl}/users`);
   }
   public addUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.apiServerUrl}/register`, user);
+    return this.http.post<User>(`${this.apiServerUrl}/adduser`, user);
   }
   public updateUser(user: User, username: string): Observable<User> {
     return this.http.put<User>(`${this.apiServerUrl}/updateuser/${username}`, user);

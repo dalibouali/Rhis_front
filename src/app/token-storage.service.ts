@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 const SCREEN1 = 'ListProduct';
@@ -11,10 +12,11 @@ export class TokenStorageService {
   jwtHelper: any
   username: any
   decodedToken: any
-  constructor() { }
+  constructor(private router: Router) { }
   signOut(): void {
     window.sessionStorage.clear();
     window.location.reload();
+    this.router.navigate(['/login'])
 
   }
   public saveToken(token: string): void {

@@ -2,7 +2,7 @@
 
 <br>
 <br>
-<div id="mycontainer" class="row section-bg" style="width: 70%; text-align: center; margin-left: 200px;">
+<div id="mycontainer" class="row section-bg" style="width: 100%; text-align: center; ">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -31,7 +31,7 @@
                                     </div>
 
                                 </td>
-                                <td class="mb-0 font-medium">{{droit.role.name}}</td>
+                                <td class="mb-0 font-medium">{{droit.role?.name}}</td>
 
                                 <td class="mb-0 font-medium" *ngIf="droit.cum===7">modifier/ajouter/afficher</td>
                                 <td class="mb-0 font-medium" *ngIf="droit.cum===5">modifier/afficher</td>
@@ -39,17 +39,11 @@
                                 <td class="mb-0 font-medium" *ngIf="droit.cum===1">afficher</td>
 
 
-                                <td class="mb-0 font-medium">{{droit.ecran.name}}</td>
+                                <td class="mb-0 font-medium">{{droit.ecran?.name}}</td>
                                 <td>
                                     <!-- Call to action buttons -->
                                     <ul class="list-inline m-0">
-                                        <li class="list-inline-item">
-                                            <button class="btn btn-primary btn-sm rounded-0" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Add role"
-                                                (click)="onOpenModal(droit,'add')"><i class="fa fa-table"
-                                                    aria-hidden="true"></i></button>
 
-                                        </li>
                                         <li class="list-inline-item">
                                             <button class="btn btn-success btn-sm rounded-0" type="button"
                                                 data-toggle="tooltip" data-placement="top" title="Edit droit"

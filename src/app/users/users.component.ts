@@ -7,6 +7,9 @@ import { Role } from '../roles/Role';
 import { RoleService } from '../roles/role.service';
 import { AffectationService } from '../roles/affectation.service';
 import { Affectation } from '../roles/Affectation';
+import { PrevilegeService } from '../previlege.service';
+import { TokenStorageService } from '../token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -23,7 +26,7 @@ export class UsersComponent implements OnInit {
   public addUserRole: User | null = null;
   public affectations: Affectation[] = [];
   public affectation: Affectation | null = null;
-  constructor(private userservice: UserService, private roleservice: RoleService, private affectationservice: AffectationService) { }
+  constructor(private userservice: UserService, private roleservice: RoleService, private affectationservice: AffectationService, private previlege: PrevilegeService, private tokenstorage: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -41,31 +44,43 @@ export class UsersComponent implements OnInit {
   }
 
   public getAffectations(): void {
-    this.affectationservice.getAffectations().subscribe(
-      (response: Affectation[]) => {
-        this.affectations = response;
-      },
-      (error: HttpErrorResponse) => { alert(error.message); }
-    )
+    if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+      this.affectationservice.getAffectations().subscribe(
+        (response: Affectation[]) => {
+          this.affectations = response;
+        },
+        (error: HttpErrorResponse) => { alert(error.message); }
+      )
+    } else {
+      this.router.navigate(['/login']);
+
+    }
+
+
   }
 
   public getRoles(): void {
-    this.roleservice.getRoles().subscribe(
-      (response: Role[]) => {
-        this.roles = response;
-      },
-      (error: HttpErrorResponse) => { alert(error.message); }
-    )
+    if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+      this.roleservice.getRoles().subscribe(
+        (response: Role[]) => {
+          this.roles = response;
+        },
+        (error: HttpErrorResponse) => { alert(error.message); }
+      )
+    }
   }
 
   public getUsers(): void {
-    this.userservice.getUsers().subscribe(
-      (response: User[]) => { this.users = response; },
-      (error: HttpErrorResponse) => { alert(error.message); }
-    );
+    if (this.previlege.canRead(this.tokenstorage.getListUser())) {
+      this.userservice.getUsers().subscribe(
+        (response: User[]) => { this.users = response; },
+        (error: HttpErrorResponse) => { alert(error.message); }
+      );
+    }
   }
 
   public OnDeleteUser(user: User | null): void {
+
     if (user) {
       this.userservice.deleteUser(user.username).subscribe(
         (response: any) => {
@@ -79,6 +94,7 @@ export class UsersComponent implements OnInit {
         }
       )
     }
+
 
   }
 
@@ -107,9 +123,9 @@ export class UsersComponent implements OnInit {
         }
       )
     }
+
+
   }
-
-
   public OnUpdateUser(user: User): void {
 
     const btn = document.getElementById('update-employee-form');
@@ -130,6 +146,7 @@ export class UsersComponent implements OnInit {
   }
 
 
+
   public onOpenModal(user: User | null, mode: string): void {
 
     const container = document.getElementById('mycontainer');
@@ -138,20 +155,27 @@ export class UsersComponent implements OnInit {
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
-      button.setAttribute('data-target', '#addUserModal')
+      if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+        button.setAttribute('data-target', '#addUserModal')
+      }
     }
     if (mode === 'addRole') {
-      this.addUserRole = user;
-      button.setAttribute('data-target', '#addRoleModal')
-
+      if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+        this.addUserRole = user;
+        button.setAttribute('data-target', '#addRoleModal')
+      }
     }
     if (mode === 'delete') {
-      button.setAttribute('data-target', '#deleteUserModal')
-      this.deleteUser = user;
+      if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+        button.setAttribute('data-target', '#deleteUserModal')
+        this.deleteUser = user;
+      }
     }
     if (mode === 'edit') {
-      this.editUser = user;
-      button.setAttribute('data-target', '#updateUserModal')
+      if (this.previlege.canUpdate(this.tokenstorage.getListUser())) {
+        this.editUser = user;
+        button.setAttribute('data-target', '#updateUserModal')
+      }
     }
     container?.appendChild(button);
     button.click();
@@ -160,43 +184,46 @@ export class UsersComponent implements OnInit {
 
   public OnAddRole(addForm: NgForm): void {
 
-    const btn = document.getElementById('add-role-form');
+    if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+      const btn = document.getElementById('add-role-form');
 
-    const json = addForm.value
-    //console.log(json)
-    if (json.role == null)
-      alert('Erreur: veuiller selectionner un role')
-    else {
+      const json = addForm.value
+      //console.log(json)
+      if (json.role == null)
+        alert('Erreur: veuiller selectionner un role')
+      else {
 
-      this.roleservice.getRole(json.role).subscribe(
-        (response: Role) => {
-          this.role = response;
+        if (btn) { btn.click(); }
+        this.roleservice.getRole(json.role).subscribe(
+          (response: Role) => {
+            this.role = response;
 
-          if (this.searchAffectation(this.addUserRole.id, this.role.id))
-            alert('erreur : affectation existe deja');
-          else {
-            const affect: Affectation = {}
-            this.affectationservice.addAffectation(affect, this.role.id, this.addUserRole.id).subscribe(
-              (response: Affectation) => {
-                this.affectation = response;
-                alert('l\'utilisateur ' + this.addUserRole.firstName + ' ' + this.addUserRole.lastName + ' est affecte au role ' + this.role.name);
-                this.getAffectations();
-              }, (error: HttpErrorResponse) => {
-                alert(error.message);
-              }
-            )
+            if (this.searchAffectation(this.addUserRole.id, this.role.id))
+              alert('erreur : affectation existe deja');
+            else {
+              const affect: Affectation = {}
+              this.affectationservice.addAffectation(affect, this.role.id, this.addUserRole.id).subscribe(
+                (response: Affectation) => {
+                  this.affectation = response;
+                  alert('l\'utilisateur ' + this.addUserRole.firstName + ' ' + this.addUserRole.lastName + ' est affecte au role ' + this.role.name);
+                  this.getAffectations();
+                }, (error: HttpErrorResponse) => {
+                  alert(error.message);
+                }
+              )
+            }
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
           }
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
 
-      )
+        )
+
+      }
 
     }
 
   }
-
 }
 
 
