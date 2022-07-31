@@ -152,11 +152,17 @@ export class UsersComponent implements OnInit {
       if (this.previlege.canWrite(this.tokenstorage.getListUser())){
       button.setAttribute('data-target', '#addUserModal')
       }
+      else{
+        button.setAttribute('data-target', '#errorModal')
+      }
     }
     if (mode === 'addRole') {
       if (this.previlege.canWrite(this.tokenstorage.getListUser())){
       this.addUserRole = user;
       button.setAttribute('data-target', '#addRoleModal')
+      }
+      else{
+        button.setAttribute('data-target', '#errorModal')
       }
     }
     if (mode === 'delete') {
@@ -164,16 +170,26 @@ export class UsersComponent implements OnInit {
       button.setAttribute('data-target', '#deleteUserModal')
       this.deleteUser = user;
     }
+    else{
+      button.setAttribute('data-target', '#errorModal')
+    }
   }
     if (mode === 'edit') {
       if (this.previlege.canUpdate(this.tokenstorage.getListUser())){
       this.editUser = user;
       button.setAttribute('data-target', '#updateUserModal')
     }
+    else{
+      button.setAttribute('data-target', '#errorModal')
+    }
   }
     container?.appendChild(button);
     button.click();
     //console.log(this.deleteUser?.firstName)
+  }
+
+  public isAffiche():boolean{
+   return this.previlege.canRead(this.tokenstorage.getListUser());
   }
 
   public OnAddRole(addForm: NgForm): void {

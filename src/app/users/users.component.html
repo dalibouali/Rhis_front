@@ -2,7 +2,7 @@
 
 <br>
 <br>
-<div id="mycontainer" class="row section-bg" style="width: 70%; text-align: center; margin-left: 200px;">
+<div id="mycontainer" *ngIf="isAffiche()" class="row section-bg" style="width: 70%; text-align: center; margin-left: 200px;">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -173,6 +173,26 @@
     </div>
     </div>
   
+ 
+    <!--error modal-->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="deleteModelLabel">Error: Unauthorized</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <p>You are not authorized to access this section !</p>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+              </div>
+          </div>
+       </div>
+    </div>
+  </div>
 
     
 <!-- Edit Modal -->
