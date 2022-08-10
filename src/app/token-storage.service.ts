@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 const SCREEN1 = 'ListProduct';
@@ -20,6 +21,7 @@ export class TokenStorageService {
 
   }
   public saveToken(token: string): void {
+
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
     console.log(token)
@@ -30,10 +32,8 @@ export class TokenStorageService {
   public saveUser(decodedToken: any): void {
 
     window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.removeItem(SCREEN1);
-    window.sessionStorage.setItem(SCREEN1, decodedToken.ListProduct)
-    window.sessionStorage.removeItem(SCREEN2);
-    window.sessionStorage.setItem(SCREEN2, decodedToken.ListUser)
+
+
     window.sessionStorage.setItem(USER_KEY, decodedToken.sub)
     console.log("user role:::", decodedToken)
   }
@@ -45,14 +45,20 @@ export class TokenStorageService {
     return {};
   }
   public getListProduct(): any {
-    const role = window.sessionStorage.getItem(SCREEN1);
+    this.decodedToken = this.getToken()
+    this.jwtHelper = new JwtHelperService();
+    this.decodedToken = this.jwtHelper.decodeToken(this.decodedToken)
+    const role = this.decodedToken.ListProduct;
     if (role) {
       return role
     }
     return {};
   }
   public getListUser(): any {
-    const role = window.sessionStorage.getItem(SCREEN2);
+    this.decodedToken = this.getToken()
+    this.jwtHelper = new JwtHelperService();
+    this.decodedToken = this.jwtHelper.decodeToken(this.decodedToken)
+    const role = this.decodedToken.ListUser;
     if (role) {
       return role
     }

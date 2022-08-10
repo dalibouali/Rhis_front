@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { KeycloakSecurityService } from '../keycloak-security.service';
 import { PrevilegeService } from '../previlege.service';
 import { TokenStorageService } from '../token-storage.service';
 
@@ -12,7 +13,7 @@ export class NavbarComponent implements OnInit {
   username = "";
 
 
-  constructor(private tokenStorage: TokenStorageService, private previlege: PrevilegeService, private router: Router) { }
+  constructor(private tokenStorage: TokenStorageService, private previlege: PrevilegeService, private router: Router, public securityservice: KeycloakSecurityService) { }
 
   ngOnInit(): void {
     this.getUser()
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
     this.tokenStorage.signOut()
     window.location.reload()
     this.router.navigate(['/']);
+    this.securityservice.kc.logout();
 
 
   }
@@ -71,6 +73,9 @@ export class NavbarComponent implements OnInit {
 
 
     //console.log(this.deleteUser?.firstName)
+  }
+  public loginkeycloak() {
+    this.securityservice.kc.login();
   }
 
 }

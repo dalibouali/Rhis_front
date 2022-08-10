@@ -23,6 +23,7 @@ export class ProductsComponent implements OnInit {
   products: any;
 
   ngOnInit(): void {
+
     this.showProducts();
   }
   open(content: any, id: number) {

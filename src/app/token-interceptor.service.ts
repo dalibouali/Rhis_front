@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { KeycloakSecurityService } from './keycloak-security.service';
 import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ import { TokenStorageService } from './token-storage.service';
 export class TokenInterceptorService implements HttpInterceptor {
 
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService, private kcService: KeycloakSecurityService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = req;
     const token = this.tokenStorageService.getToken();

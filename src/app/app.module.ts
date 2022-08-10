@@ -15,9 +15,13 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { HomeComponent } from './home/home.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { KeycloakSecurityService } from './keycloak-security.service';
 
 
+export function kcFactory(kcSecurity: KeycloakSecurityService) {
+  return () => kcSecurity.init();
 
+}
 
 
 
@@ -47,6 +51,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
   ],
   providers: [UserService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }, { provide: ErrorHandler, useClass: ErrorHandlerService },
+    {
+      provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
