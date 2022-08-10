@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+
+  ProductPrev = JSON.parse(window.localStorage.getItem('privileges'))['ListProduct'];
   product = new FormGroup({
     name: new FormControl(''),
     price: new FormControl(''),
@@ -39,7 +41,7 @@ export class ProductsComponent implements OnInit {
 
   showProducts(): void {
 
-    if (this.previlege.canRead(this.tokenstorage.getListProduct())) {
+    if (this.previlege.canRead(this.ProductPrev)) {
       this.productservice.getProducts()
         .subscribe(
           product => {
@@ -56,7 +58,7 @@ export class ProductsComponent implements OnInit {
 
   }
   deleteProduct(name: string): void {
-    if (this.previlege.canWrite(this.tokenstorage.getListProduct())) {
+    if (this.previlege.canWrite(this.ProductPrev)) {
       this.productservice.deleteFProduct(name)
         .subscribe(
           (product) => {
@@ -74,7 +76,7 @@ export class ProductsComponent implements OnInit {
     }
   }
   update(name: string): void {
-    console.log(this.previlege.canUpdate(this.tokenstorage.getListProduct()))
+    console.log(this.previlege.canUpdate(this.ProductPrev))
     if (this.previlege.canUpdate(this.tokenstorage.getListProduct())) {
       this.productservice.updateProduct(name, this.product.value).subscribe(
         data => {
@@ -93,7 +95,7 @@ export class ProductsComponent implements OnInit {
 
   }
   addProduct(): void {
-    if (this.previlege.canWrite(this.tokenstorage.getListProduct())) {
+    if (this.previlege.canWrite(this.ProductPrev)) {
       this.productservice.addProduct(this.product.value).subscribe(
         data => {
           this.ngOnInit();

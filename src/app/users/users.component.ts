@@ -16,7 +16,7 @@ import { TokenStorageService } from '../token-storage.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
+  UserPrev = JSON.parse(window.localStorage.getItem('privileges'))['ListProduct'];
   public users: User[] = [];
   public deleteUser: User | null = null;
   public editUser: User | null = null;
@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit {
   }
 
   public getAffectations(): void {
-    if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+    if (this.previlege.canWrite(this.UserPrev)) {
       this.affectationservice.getAffectations().subscribe(
         (response: Affectation[]) => {
           this.affectations = response;
@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
   }
 
   public getRoles(): void {
-    if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+    if (this.previlege.canWrite(this.UserPrev)) {
       this.roleservice.getRoles().subscribe(
         (response: Role[]) => {
           this.roles = response;
@@ -65,7 +65,7 @@ export class UsersComponent implements OnInit {
   }
 
   public getUsers(): void {
-    if (this.previlege.canRead(this.tokenstorage.getListUser())) {
+    if (this.previlege.canRead(this.UserPrev)) {
       this.userservice.getUsers().subscribe(
         (response: User[]) => { this.users = response; },
         (error: HttpErrorResponse) => { alert(error.message); }
@@ -149,7 +149,7 @@ export class UsersComponent implements OnInit {
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
-      if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+      if (this.previlege.canWrite(this.UserPrev)) {
         button.setAttribute('data-target', '#addUserModal')
       }
       else {
@@ -157,7 +157,7 @@ export class UsersComponent implements OnInit {
       }
     }
     if (mode === 'addRole') {
-      if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+      if (this.previlege.canWrite(this.UserPrev)) {
         this.addUserRole = user;
         button.setAttribute('data-target', '#addRoleModal')
       }
@@ -166,7 +166,7 @@ export class UsersComponent implements OnInit {
       }
     }
     if (mode === 'delete') {
-      if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+      if (this.previlege.canWrite(this.UserPrev)) {
         button.setAttribute('data-target', '#deleteUserModal')
         this.deleteUser = user;
       }
@@ -175,7 +175,7 @@ export class UsersComponent implements OnInit {
       }
     }
     if (mode === 'edit') {
-      if (this.previlege.canUpdate(this.tokenstorage.getListUser())) {
+      if (this.previlege.canUpdate(this.UserPrev)) {
         this.editUser = user;
         button.setAttribute('data-target', '#updateUserModal')
       }
@@ -189,12 +189,12 @@ export class UsersComponent implements OnInit {
   }
 
   public isAffiche(): boolean {
-    return this.previlege.canRead(this.tokenstorage.getListUser());
+    return this.previlege.canRead(this.UserPrev);
   }
 
   public OnAddRole(addForm: NgForm): void {
 
-    if (this.previlege.canWrite(this.tokenstorage.getListUser())) {
+    if (this.previlege.canWrite(this.UserPrev)) {
       const btn = document.getElementById('add-role-form');
 
       const json = addForm.value
