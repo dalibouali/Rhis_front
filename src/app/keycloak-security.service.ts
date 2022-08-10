@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { KeycloakInstance } from 'keycloak-js'
+import { AuthService } from './auth.service';
 import { TokenStorageService } from './token-storage.service';
 declare var Keycloak: any;
 @Injectable({
@@ -8,7 +9,7 @@ declare var Keycloak: any;
 export class KeycloakSecurityService {
 
   public kc: KeycloakInstance;
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService, private authservice: AuthService) { }
 
 
   public async init() {
@@ -23,14 +24,28 @@ export class KeycloakSecurityService {
       onLoad: 'login-required',
 
     })
-    let userDetails = await this.kc.loadUserProfile();
-    const tok = userDetails['attributes'].token
-    var obj = JSON.parse(tok);
+    console.log(this.kc.tokenParsed['preferred_username']);
+    this.authservice.getPrivileges(this.kc.tokenParsed['preferred_username']).subscribe(
+      data => {
+        console.log(data)
 
-    console.log(this.kc.tokenParsed);
+        const output = JSON.stringify(data)
 
-    console.log(obj['jwt'])
-    this.tokenStorageService.saveToken(obj['jwt'])
+        window.localStorage.removeItem("privileges")
+        window.localStorage.setItem("privileges", output);
+        window.localStorage.removeItem("token")
+        window.localStorage.setItem("token", this.kc.token);
+
+
+        console.log(JSON.parse(window.localStorage.getItem('privileges'))['ListProduct'])
+
+      },
+      err => {
+        console.log(err)
+      }
+    )
+
+
   }
 
 }
