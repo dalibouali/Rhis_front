@@ -14,9 +14,9 @@ export class KeycloakSecurityService {
   public async init() {
     console.log("security initialiaation .....")
     this.kc = new Keycloak({
-      url: "http://localhost:8090/auth/",
-      realm: "Test-Realm",
-      clientId: "rhis-front"
+      url: "http://localhost:8081/auth/",
+      realm: "oauth2-realm",
+      clientId: "oauth2-client1"
 
     });
     await this.kc.init({
@@ -25,12 +25,12 @@ export class KeycloakSecurityService {
     })
     let userDetails = await this.kc.loadUserProfile();
     const tok = userDetails['attributes'].token
-    var obj = JSON.parse(tok);
+    //var obj = JSON.parse(tok);
 
     console.log(this.kc.tokenParsed);
 
-    console.log(obj['jwt'])
-    this.tokenStorageService.saveToken(obj['jwt'])
+    //console.log(obj['jwt'])
+    //this.tokenStorageService.saveToken(obj['jwt'])
   }
 
 }
