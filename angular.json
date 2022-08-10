@@ -37,6 +37,7 @@
               "./node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
+              "./node_modules/keycloak-js/dist/keycloak.min.js",
               "./node_modules/@popperjs/core/dist/umd/popper.min.js",
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js"
