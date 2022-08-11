@@ -9,6 +9,7 @@ import { AffectationService } from '../roles/affectation.service';
 import { Affectation } from '../roles/Affectation';
 import { PrevilegeService } from '../previlege.service';
 import { TokenStorageService } from '../token-storage.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +17,15 @@ import { TokenStorageService } from '../token-storage.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  UserPrev = JSON.parse(window.localStorage.getItem('privileges'))['ListProduct'];
+  encryptPrev = window.localStorage.getItem('privileges');
+  decrypt = CryptoJS.AES.decrypt(this.encryptPrev, "RHIS").toString(CryptoJS.enc.Utf8);
+
+  Privileges = JSON.parse(this.decrypt)
+
+
+
+
+  UserPrev = this.Privileges['ListUser'];
   public users: User[] = [];
   public deleteUser: User | null = null;
   public editUser: User | null = null;

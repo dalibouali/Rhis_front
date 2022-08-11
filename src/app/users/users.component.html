@@ -192,65 +192,65 @@
         </div>
     </div>
 
-
-    <!--error modal-->
-    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModelLabel">Error: Unauthorized</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+</div>
+<!--error modal-->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModelLabel">Error: Unauthorized</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You are not authorized to access this section !</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
                 </div>
-                <div class="modal-body">
-                    <p>You are not authorized to access this section !</p>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateEmployeeModalLabel">Edit Employee </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #updateForm="ngForm">
+                    <div class="form-group">
+                        <label for="name">First Name</label>
+                        <input type="text" ngModel="{{editUser?.firstName}}" name="firstName" class="form-control"
+                            id="firstName" placeholder="first Name" required>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" ngModel="{{editUser?.lastName}}" name="lastName" class="form-control"
+                            id="lastName" placeholder="last Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="email" ngModel="{{editUser?.username}}" name="username" class="form-control"
+                            id="username" placeholder="username" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="update-employee-form" data-dismiss="modal"
+                            class="btn btn-secondary">Close</button>
+                        <button data-dismiss="modal" class="btn btn-primary"
+                            (click)="OnUpdateUser(updateForm.value)">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    <!-- Edit Modal -->
-    <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateEmployeeModalLabel">Edit Employee </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form #updateForm="ngForm">
-                        <div class="form-group">
-                            <label for="name">First Name</label>
-                            <input type="text" ngModel="{{editUser?.firstName}}" name="firstName" class="form-control"
-                                id="firstName" placeholder="first Name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" ngModel="{{editUser?.lastName}}" name="lastName" class="form-control"
-                                id="lastName" placeholder="last Name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="email" ngModel="{{editUser?.username}}" name="username" class="form-control"
-                                id="username" placeholder="username" required>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" id="update-employee-form" data-dismiss="modal"
-                                class="btn btn-secondary">Close</button>
-                            <button data-dismiss="modal" class="btn btn-primary"
-                                (click)="OnUpdateUser(updateForm.value)">Save changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
