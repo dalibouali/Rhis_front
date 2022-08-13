@@ -7,7 +7,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { TokenStorageService } from '../token-storage.service';
 import { PrevilegeService } from '../previlege.service';
 import { Router } from '@angular/router';
-
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-products',
@@ -15,8 +15,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+  encryptPrev = window.localStorage.getItem('privileges');
+  decrypt = CryptoJS.AES.decrypt(this.encryptPrev, "RHIS").toString(CryptoJS.enc.Utf8);
 
-  ProductPrev = JSON.parse(window.localStorage.getItem('privileges'))['ListProduct'];
+  Privileges = JSON.parse(this.decrypt)
+
+
+  ProductPrev = this.Privileges['ListProduct'];
+
+
+
+
   product = new FormGroup({
     name: new FormControl(''),
     price: new FormControl(''),

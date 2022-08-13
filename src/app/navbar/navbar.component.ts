@@ -45,8 +45,8 @@ export class NavbarComponent implements OnInit {
   }
 
   getUser() {
-    if (this.tokenStorage.getUser) {
-      this.username = this.tokenStorage.getUser()
+    if (this.securityservice.kc.tokenParsed['preferred_username']) {
+      this.username = this.securityservice.kc.tokenParsed['preferred_username']
       let cred = [this.username]
       return cred;
     }
