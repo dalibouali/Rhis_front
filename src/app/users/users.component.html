@@ -194,6 +194,7 @@
 </div>
 
 
+
 <!-- Edit Modal -->
 <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel"
     aria-hidden="true">
@@ -223,14 +224,45 @@
                             id="usernameEdit" placeholder="username" required>
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" id="update-employee-form" data-dismiss="modal"
-                            class="btn btn-secondary">Close</button>
-                        <button data-dismiss="modal" class="btn btn-primary"
-                            (click)="OnUpdateUser(updateForm.value)">Save changes</button>
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog"
+                        aria-labelledby="userEditModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateEmployeeModalLabel">Edit Employee </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form #updateForm="ngForm">
+                                        <div class="form-group">
+                                            <label for="name">First Name</label>
+                                            <input type="text" ngModel="{{editUser?.firstName}}" name="firstName"
+                                                class="form-control" id="firstNameEdit" placeholder="first Name"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" ngModel="{{editUser?.lastName}}" name="lastName"
+                                                class="form-control" id="lastNameEdit" placeholder="last Name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username">Username</label>
+                                            <input type="email" ngModel="{{editUser?.username}}" name="username"
+                                                class="form-control" id="usernameEdit" placeholder="username" required>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" id="update-employee-form" data-dismiss="modal"
+                                                class="btn btn-secondary">Close</button>
+                                            <button data-dismiss="modal" class="btn btn-primary"
+                                                (click)="OnUpdateUser(updateForm.value)">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
