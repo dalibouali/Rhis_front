@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakSecurityService } from '../keycloak-security.service';
 import { PrevilegeService } from '../previlege.service';
-import { TokenStorageService } from '../token-storage.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +10,17 @@ import { TokenStorageService } from '../token-storage.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  encryptPrev = window.localStorage.getItem('privileges');
+  decrypt = CryptoJS.AES.decrypt(this.encryptPrev, "RHIS").toString(CryptoJS.enc.Utf8);
+
+  Privileges = JSON.parse(this.decrypt)
+
+
+  UserPrev = this.Privileges['ListUser'];
   username = "";
 
 
-  constructor(private tokenStorage: TokenStorageService, private previlege: PrevilegeService, private router: Router, public securityservice: KeycloakSecurityService) { }
+  constructor(private previlege: PrevilegeService, private router: Router, public securityservice: KeycloakSecurityService) { }
 
   ngOnInit(): void {
     this.getUser()
@@ -21,9 +28,12 @@ export class NavbarComponent implements OnInit {
     this.isLoggesIn();
   }
   logout() {
-    this.tokenStorage.signOut()
+
+
+
+
     window.location.reload()
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
     this.securityservice.kc.logout();
 
 
@@ -64,7 +74,7 @@ export class NavbarComponent implements OnInit {
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'error') {
-      if (!this.previlege.canRead(this.tokenStorage.getListUser())) {
+      if (!this.previlege.canRead(this.UserPrev)) {
         button.setAttribute('data-target', '#errorModal')
         container?.appendChild(button);
         button.click();
@@ -74,8 +84,6 @@ export class NavbarComponent implements OnInit {
 
     //console.log(this.deleteUser?.firstName)
   }
-  public loginkeycloak() {
-    this.securityservice.kc.login();
-  }
+
 
 }

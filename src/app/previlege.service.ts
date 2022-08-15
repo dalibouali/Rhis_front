@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { TokenStorageService } from './token-storage.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrevilegeService {
 
-  constructor(private tokenStorage: TokenStorageService) { }
+  constructor() { }
 
 
   canRead(Key: number) {

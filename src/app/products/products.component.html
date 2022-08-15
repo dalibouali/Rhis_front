@@ -1,6 +1,6 @@
 <br>
 <br>
-<div class="row section-bg" style="width: 100%; text-align: center; ">
+<div *ngIf="isAffiche()" class="row section-bg" style="width: 100%; text-align: center; ">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -143,4 +143,8 @@
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="!isAffiche()">
+    <h1>Error: Unauthorized</h1>
+
 </div>

@@ -8,7 +8,7 @@ import { RoleService } from '../roles/role.service';
 import { AffectationService } from '../roles/affectation.service';
 import { Affectation } from '../roles/Affectation';
 import { PrevilegeService } from '../previlege.service';
-import { TokenStorageService } from '../token-storage.service';
+
 import * as CryptoJS from 'crypto-js';
 
 @Component({
@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit {
   public addUserRole: User | null = null;
   public affectations: Affectation[] = [];
   public affectation: Affectation | null = null;
-  constructor(private userservice: UserService, private roleservice: RoleService, private affectationservice: AffectationService, private previlege: PrevilegeService, private tokenstorage: TokenStorageService) { }
+  constructor(private userservice: UserService, private roleservice: RoleService, private affectationservice: AffectationService, private previlege: PrevilegeService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -79,6 +79,10 @@ export class UsersComponent implements OnInit {
         (response: User[]) => { this.users = response; },
         (error: HttpErrorResponse) => { alert(error.message); }
       );
+    } else {
+      alert("you are unauthorized to see users")
+
+
     }
   }
 
@@ -162,7 +166,7 @@ export class UsersComponent implements OnInit {
         button.setAttribute('data-target', '#addUserModal')
       }
       else {
-        button.setAttribute('data-target', '#errorModal')
+        alert("you are unauthorized to add users")
       }
     }
     if (mode === 'addRole') {
@@ -171,7 +175,7 @@ export class UsersComponent implements OnInit {
         button.setAttribute('data-target', '#addRoleModal')
       }
       else {
-        button.setAttribute('data-target', '#errorModal')
+        alert("you are unauthorized to add roles")
       }
     }
     if (mode === 'delete') {
@@ -180,7 +184,7 @@ export class UsersComponent implements OnInit {
         this.deleteUser = user;
       }
       else {
-        button.setAttribute('data-target', '#errorModal')
+        alert("you are unauthorized to delete users")
       }
     }
     if (mode === 'edit') {
@@ -189,7 +193,7 @@ export class UsersComponent implements OnInit {
         button.setAttribute('data-target', '#updateUserModal')
       }
       else {
-        button.setAttribute('data-target', '#errorModal')
+        alert("you are unauthorized to edit users")
       }
     }
     container?.appendChild(button);

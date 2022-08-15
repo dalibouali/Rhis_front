@@ -4,10 +4,11 @@ import { ProductService } from '../product.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
-import { TokenStorageService } from '../token-storage.service';
+
 import { PrevilegeService } from '../previlege.service';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -30,7 +31,7 @@ export class ProductsComponent implements OnInit {
     name: new FormControl(''),
     price: new FormControl(''),
   });
-  constructor(private productservice: ProductService, private modalService: NgbModal, private previlege: PrevilegeService, private tokenstorage: TokenStorageService, private router: Router) { }
+  constructor(private productservice: ProductService, private modalService: NgbModal, private previlege: PrevilegeService, private router: Router) { }
   products: any;
 
   ngOnInit(): void {
@@ -56,12 +57,13 @@ export class ProductsComponent implements OnInit {
           product => {
             this.products = product
           },
-          error => {
-            console.log(error)
+          (error: HttpErrorResponse) => {
+            alert(error.message);
           }
         );
     } else {
-      this.router.navigate(['/login']);
+      alert("you are unauthorized to see products")
+
 
     }
 
@@ -85,8 +87,8 @@ export class ProductsComponent implements OnInit {
     }
   }
   update(name: string): void {
-    console.log(this.previlege.canUpdate(this.ProductPrev))
-    if (this.previlege.canUpdate(this.tokenstorage.getListProduct())) {
+
+    if (this.previlege.canUpdate(this.ProductPrev)) {
       this.productservice.updateProduct(name, this.product.value).subscribe(
         data => {
           this.ngOnInit();
@@ -102,6 +104,9 @@ export class ProductsComponent implements OnInit {
       alert("you are unauthorized to update a product")
     }
 
+  }
+  public isAffiche(): boolean {
+    return this.previlege.canRead(this.ProductPrev);
   }
   addProduct(): void {
     if (this.previlege.canWrite(this.ProductPrev)) {
